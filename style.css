@@ -1,0 +1,99 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(#77B8D3, #ECA8BF);
+    height: 100vh;
+}
+
+.container {
+    border: 5px solid black;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 70%;
+}
+
+.indicators {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    margin-top: 5%;
+}
+
+.counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid #E5CAC7;
+    font-size: 25px;
+    font-family: sans-serif;
+    font-weight: 900;
+    color: #EDA4C5;
+    padding: 5px;
+    border-radius: 10px;
+    width: 80px;
+}
+
+.timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #E5CAC7;
+    font-size: 25px;
+    font-family: sans-serif;
+    font-weight: 900;
+    color: #EDA4C5;
+    padding: 5px;
+    border-radius: 10px;
+    width: 120px;
+
+}
+
+.gear img {
+    height: 50px;
+    width: 50px;
+    margin-left: 5px;
+    filter: invert(1);
+    cursor: pointer;
+    transition: transform 1s;
+}
+
+.gear.active img {
+    transform: rotate(90deg);
+    transition: all 1s;
+}
+
+
+.field {
+    margin: 5% auto;
+    margin-bottom: 0;
+    display: block;
+    border-radius: 10px;
+    border: 5px solid #62BFF7;
+    position: relative;
+    width: 100%;
+}
+
+
+.cell {
+    /*нужно менять высоту и ширину*/
+    height: 100px;
+    width: 100px;
+    border: 3px solid #977FD7;
+    border-radius: 10px;
+    position: absolute;
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .3s;
+    cursor: pointer;
+}
