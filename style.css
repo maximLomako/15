@@ -18,7 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-basis: 70%;
+    flex-basis: 40%;
 }
 
 .indicators {
@@ -94,6 +94,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all .3s;
+    transition: all .1s;
     cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.hovered {
+   background-color: #E5CAC7;
 }
