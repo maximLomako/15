@@ -1,4 +1,5 @@
 let numOfCellsinRow = 4;
+let newCellsValue = [];
 const createPage = () => {
   const body = document.querySelector('body');
 
@@ -26,7 +27,7 @@ const createPage = () => {
   };
 
   let arrOfNum = getCorrectArray(numOfCellsinRow);
-
+  // let arrOfNum = [...JSON.parse(localStorage.getItem('newCellsValue')).map(c => c.value)];
   const createField = () => {
 
     const numbers = arrOfNum;
@@ -46,7 +47,8 @@ const createPage = () => {
 
     const field = document.querySelector('.field');
     numbers.map((c, i) => {
-      field.insertAdjacentHTML('beforeend', `<div class="cell" draggable="true">${c === 0 ? '' : c}</div>`);
+      field.insertAdjacentHTML('beforeend',
+        `<div class="cell" draggable="true">${c === 0 ? '' : c}</div>`);
     });
   }
   createField();
@@ -90,6 +92,7 @@ const createPage = () => {
   const cells = [];
   let empty = {};
   let counterValue = 0;
+  let audioStatus = true;
 
   const initGame = () => {
     fieldWidth = window.getComputedStyle(field).getPropertyValue('width');
@@ -103,7 +106,9 @@ const createPage = () => {
         c.style.fontSize = '5vw';
 
         const left = i % numOfCellsinRow;
+        // const left = JSON.parse(localStorage.getItem('newCellsValue'))[i].left
         const top = (i - left) / numOfCellsinRow;
+        // const top = JSON.parse(localStorage.getItem('newCellsValue'))[i].top
 
         if (arrOfNum[i] === 0) {
           empty = {
@@ -165,8 +170,8 @@ const createPage = () => {
 
 
   const move = index => {
-
     const cell = cells[index]; // взяли данные о ячейке из массива объектов
+
     const leftDiff = Math.abs(empty.left - cell.left); // сравниваем значения по модулю
     const topDiff = Math.abs(empty.top - cell.top); // сравниваем значения по модулю
     if (leftDiff + topDiff > 1) {
@@ -186,6 +191,7 @@ const createPage = () => {
     cell.top = emptyTop; // записываем в координаты яейки временные координаты пустой ячнйки
 
     countMoves();
+    audioStatus ? audio.play() : '';
 
     let cellsWithoutEmpty = cells.filter((element) => {
       return element.value !== 0;
@@ -196,8 +202,16 @@ const createPage = () => {
     })
 
     if (isFinished) {
-      console.log('You win!');
+      modal.classList.toggle('modal__active')
+      modalDialog.innerHTML =
+        `Congrats! You are win with ${counterValue} moves and your time is ${timer.textContent}`
+      setTimeout(()=> {
+        modal.remove();
+        container.remove();
+        createPage();
+      }, 2000)
     }
+
   }
 
 
@@ -229,6 +243,7 @@ const createPage = () => {
   const toggleModal = () => {
     modal.classList.toggle('modal__active')
     gear.classList.toggle('active')
+
   }
 
 //start new game
@@ -256,13 +271,27 @@ const createPage = () => {
         createPage();
       }
     })
+  }
+// audio
+  let audio = new Audio('./assets/audio/button.wav');
 
-
-
+  const changeAudioStatus = () => {
+    modalItems[4].style.textDecoration = audioStatus ? 'line-through' : 'none';
+    audioStatus = !audioStatus;
   }
 
+  //save game
+  // const saveGame = () => {
+  //   newCellsValue = [...cells];
+  //   localStorage.setItem('newCellsValue', JSON.stringify(newCellsValue));
+  //   console.log(cells);
+  // }
+
+
   modalItems[0].addEventListener('click', startGame);
+  // modalItems[1].addEventListener('click', saveGame);
   modalItems[2].addEventListener('click', changeFieldSize);
+  modalItems[4].addEventListener('click', changeAudioStatus);
   gearIcon.addEventListener('click', toggleModal);
   close.addEventListener('click', toggleModal);
 
